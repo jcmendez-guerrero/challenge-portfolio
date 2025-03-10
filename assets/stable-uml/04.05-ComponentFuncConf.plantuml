@@ -1,4 +1,4 @@
-@startuml
+@startuml 04.05-ComponentFuncConf
 title Building Block - Whitebox - Component Diagram - Functional Test Configuration
 ' Import external Libraries
 ' C4

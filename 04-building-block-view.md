@@ -449,7 +449,7 @@ def getTests(String token, Object objectId) {
 
 Functional Test Execution runs out of the JSL Pipeline but inside Jenkins, it loads the libraries on request, JSL only will trigger the master execution, therefore other tests might be called manually. Once the libraries are loaded, it reads the config and proceed to run the tests either on docker or agent. Once finished the tests are verified and the uploaded to Jira to finally cleanup the environments.
 
-![Functional Execution](./challenge-portfolio/assets/uml-render/04.04-ComponentFuncExec/04.04-ComponentFuncExec.png)
+![Functional Execution](./assets/uml-render/04.04-ComponentFuncExec/04.04-ComponentFuncExec.png)
 
 | Component | Description | Inputs | Outputs |
 |:---:|:---:|:---:|:---:|

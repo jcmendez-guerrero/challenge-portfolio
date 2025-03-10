@@ -15,7 +15,7 @@ This section contain all the delimits of the systems and communications
 
 ![Business System Context Diagram](./assets/uml-render/02-bizContext/02-bizContext.png)
 
-![Technical System Context Diagram](./assets/uml-render/03-techContext/03-techContext.png)
+![Technical System Context Diagram](./assets/uml-render/02-techContext/02-techContext.png)
 
 | Neighbour | Description |
 |:---:|:---:|
