@@ -1,0 +1,67 @@
+@startuml 03-techContext
+title Technical System Context Diagram
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master
+
+!define AddICON https://raw.githubusercontent.com/plantuml-stdlib/gilbarbara-plantuml-sprites/master/sprites
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include ICONURL/common.puml
+!include ICONURL/font-awesome-5/users.puml
+!include ICONURL/font-awesome-5/mail_bulk.puml
+!include ICONURL/font-awesome-5/jenkins.puml
+!include ICONURL/font-awesome-5/github.puml
+!include ICONURL/devicons/jira.puml
+!include ICONURL/devicons2/vscode.puml
+!include AddICON/apigee.puml
+
+' System Definition
+
+System_Boundary(Jenkins,"Jenkins") {
+    System_Boundary(stable,"JSL Automated Stable Release System") {
+        System(functional, "Functional Tests", "System in charge of executing Functional Tests")
+        System_Boundary(pipeline,"JSL Pipeline") {
+            System(release,"Release Manager", "System in charge of Automatic Release Management After Testing")
+            System(regression, "JSL Regression Tests", "System inside the JSL Pipeline Capable of checking and detecting Functional tests regresions after execution")
+        }
+    }  
+}
+
+System_Ext(IDE,"IDE", "Development Environment", $sprite="vscode") {
+}
+
+
+System_Ext(GH,"GitHub", "Standard SCM", $sprite="github") {
+}
+
+System_Ext(teams,"MS Teams", "Standard Communication Tool",$sprite="img:https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg/2203px-Microsoft_Office_Teams_%282018%E2%80%93present%29.svg.png{scale=0.025}")
+
+System_Ext(jira,"Jira", "Standard Ticketing tool and Project Management", $sprite="jira") {
+}
+
+System_Ext(apigee,"Apigee", "System used to have a bridge communication between Internet and on prem Applications API", $sprite="apigee")
+
+
+Rel_U(IDE, GH, "internet\n(HTTPS/SSH)")
+Rel(GH, apigee, "internet\n(HTTPS)")
+Rel(apigee, Jenkins, "VPN\n(HTTPS)")
+Rel_D(pipeline, functional, "Internal\n(HTTPS)")
+Rel_R(functional, jira, "Internet\n(HTTPS)")
+Rel(regression, jira, "Internet\n(HTTPS)")
+Rel(Jenkins, teams, "Internet\n(HTTPS)")
+Rel_U(release, GH, "Internet\n(HTTPS)")
+
+
+SHOW_LEGEND()
+
+@enduml

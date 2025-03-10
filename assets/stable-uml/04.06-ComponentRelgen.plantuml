@@ -1,0 +1,91 @@
+@startuml 04.06-ComponentRelgen
+title Building Block - Whitebox - Component Diagram - Release Generation
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons"
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include $ICONURL/common.puml
+!include $ICONURL/font-awesome-5/users.puml
+!include $ICONURL/font-awesome-5/mail_bulk.puml
+!include $ICONURL/font-awesome-5/jenkins.puml
+!include $ICONURL/font-awesome-5/github.puml
+!include $ICONURL/devicons/jira.puml
+!include $ICONURL/devicons/git.puml
+!include $ICONURL/font-awesome/files_o.puml
+
+' System Definition
+
+Person(devops, "DevOps Engineer", "DevOps Engineer Manages Functional Config and JSL Changes")
+Person(user, "DevOps User", "User that uses the JSL to deploy new features")
+
+
+Person_Ext(githubapp, "Github_App", "Github App than handle secure communication with GitHub", $sprite="robot")
+
+
+System_Ext(GH,"GitHub", "Standard SCM", $sprite="github")
+System_Ext(jenkins,"Jenkins Master", "Jenkins Installation UI", $sprite="jenkins")
+System_Ext(teams,"MS Teams", "Standard Communication Tool",$sprite="img:https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg/2203px-Microsoft_Office_Teams_%282018%E2%80%93present%29.svg.png{scale=0.025}")
+
+
+System_Boundary(pipeline,"JSL Pipeline") {
+    System_Boundary(release,"Release Manager", "System in charge of Automatic Release Management After Testing") {
+        Container_Boundary(commit,"Release Generation") {
+          Component_Ext(releaseauthorizer, "Release Authorizer", "Component that request authorization and wait for owners for it. Otherwise if automatic, check if everything has been correctly passed", $sprite="git")
+          Component(releaseChecker, "Release Checker", "Check the previous and current releases when required for upgrade")
+          Component(releaseBranchGenerator, "Release Branch Generator", "Generates the release branch based on the current release with all needed components and communicate to Teams")
+          Component_Ext(gitHubLibs, "Custom Libraries that supports the GitHub API internally in Jenkins")
+          Component(releaseNotesGen, "Release Notes Generator", "Generates the release notes based on the commits in the release branch")
+          Component_Ext(jenkinsagent,"Jenkins Agent (Container)", "Agent that runs the commit lint process", $sprite="jenkins")
+          Component_Ext(code, "Cloned Copy of the Code", "Cloned copy of the code to be compiled", $sprite="git")
+          Component(releaseNotes, "Release Notes", "Release Notes to be added to the release", $sprite="files_o")
+        }
+        Container(prepare, "Stable Prepare/Generate", "Prepare the stable branch for the release and needed PRs")
+        Container(hotfix, "HotFix/Fix Generation", "Integrates the hotfix in the current, prerelease and stable releases")
+    }
+    Container_Ext(otherSteps, "Other JSL Pipeline Steps")
+    System_Boundary(regression, "JSL Regression Tests", "System inside the JSL Pipeline Capable of checking and detecting tests regresions after execution") {
+      Container(funcVerify, "Functional Exec and Verify", "Request the execute of the functional tests and verifies the results")
+    }
+}
+
+Rel(devops, jenkins, "Can Manually Trigger Release", "HTTPS")
+Rel(devops, GH, "Approve/Check Code", "HTTPS/SSH Git")
+Rel(user, GH, "Consume JSL Release")
+Rel(githubapp, GH, "Handle secure communication with GitHub","Oauth/HTTPS")
+Rel(funcVerify, releaseauthorizer, "Request release Generation", "groovy")
+Rel(hotfix,releaseBranchGenerator, "Request to integrate Hotfix", "HTTP")
+Rel(releaseauthorizer, jenkinsagent, "Check if release is possible", "groovy")
+Rel_L(releaseauthorizer,jenkins, "Request Manual Approval", "HTTP")
+Rel(jenkins,devops, "Wait for  Manual Approval")
+Rel_R(releaseauthorizer,releaseChecker, "Request to proceed with the release", "Groovy")
+Rel(releaseChecker, GH, "Check if release is possible by gathering previous data", "HTTP")
+Rel(releaseChecker, releaseBranchGenerator, "Proceed to confirm details of release", "groovy")
+Rel(releaseBranchGenerator, code, "Create Release Branch, and gather details", "HTTP")
+BiRel(releaseBranchGenerator, releaseNotesGen, "Pass the release details and receive the Release Notes", "HTTP")
+Rel(releaseNotesGen, gitHubLibs, "Generate Release Notes (API)", "HTTP")
+Rel(gitHubLibs, GH, "Execute GH API Requests", "HTTPS")
+Rel_U(releaseNotesGen, releaseNotes, "Store the release notes", "groovy/md")
+Rel(releaseBranchGenerator, releaseNotes, "Include the notes for the release", "HTTPS/SSH Git")
+Rel(releaseBranchGenerator, GH, "Create Release Branch", "HTTP/SSH Git")
+Rel(releaseBranchGenerator, gitHubLibs, "Create Github Release", "HTTPS")
+BiRel(releaseBranchGenerator, prepare, "Request to Prepare Stable Branch and execute release process", "HTTP")
+BiRel(releaseBranchGenerator, teams, "Notify Release Creation with release Notes", "HTTP")
+Rel(releaseBranchGenerator,jenkinsagent, "Execute other steps in the pipeline", "Groovy")
+Rel(jenkinsagent, otherSteps, "Execute other steps in the pipeline", "HTTP")
+
+
+
+SHOW_LEGEND()
+
+
+@enduml
