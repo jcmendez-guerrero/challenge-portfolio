@@ -35,7 +35,7 @@
 
 - [Table of Contents](#table-of-contents)
 - [Executive Summary](#executive-summary)
-    - [:dart: Strategic Impact](#dart-strategic-impact)
+    - [Strategic Impact](#strategic-impact)
     - [Project Context and Challenges](#project-context-and-challenges)
         - [Project Overview](#project-overview)
             - [Background](#background)
@@ -43,36 +43,40 @@
             - [Objectives](#objectives)
             - [Solution Strategy](#solution-strategy)
 - [Solution Contents](#solution-contents)
-- [1 Introduction and Goals](#1-introduction-and-goals)
-    - [1.1 Requirements Overview](#11-requirements-overview)
-    - [1.2 Quality Goals](#12-quality-goals)
-    - [1.3 Systems Stakeholders](#13-systems-stakeholders)
-- [2. Technological Constraints](#2-technological-constraints)
-- [3 System Context and Scope](#3-system-context-and-scope)
-    - [3.1 System Context Diagram](#31-system-context-diagram)
-- [4 System Context and Scope](#4-system-context-and-scope)
-    - [4.1 Withebox - Container Diagram](#41-withebox---container-diagram)
-    - [4.2 Blackbox - Components Diagram](#42-blackbox---components-diagram)
-            - [4.2.1.1 Code Implementation Example](#4211-code-implementation-example)
-        - [4.2.2 Regression Verify](#422-regression-verify)
-            - [4.2.2.1 Code Implementation Example](#4221-code-implementation-example)
-        - [4.2.3 Functional Execution and Verify](#423-functional-execution-and-verify)
-            - [4.3.2.1 Code Implementation Example](#4321-code-implementation-example)
-        - [4.2.4 Functional Execution](#424-functional-execution)
-            - [4.2.4.1 Code Implementation Example](#4241-code-implementation-example)
-        - [4.2.5 Functional Test Configuration](#425-functional-test-configuration)
-        - [4.2.6 Release Generation](#426-release-generation)
-            - [4.2.6.1 Code Implementation Example](#4261-code-implementation-example)
-        - [4.2.7 Stable Preparation/Generation](#427-stable-preparationgeneration)
-            - [4.2.7.1 Code Implementation Example](#4271-code-implementation-example)
-        - [4.2.8 Hotfix Generation](#428-hotfix-generation)
-            - [4.2.8.1 Code Implementation Example](#4281-code-implementation-example)
-- [5 Runtime View](#5-runtime-view)
-    - [5.1 Scenario 1 - PR](#51-scenario-1---pr)
-    - [5.2 Scenario 2 - Standard Master Merge](#52-scenario-2---standard-master-merge)
-    - [5.3 Scenario 3 - Stable Release Generation](#53-scenario-3---stable-release-generation)
-- [7 Technical Risks](#7-technical-risks)
-- [7 Results](#7-results)
+- [Introduction and Goals](#introduction-and-goals)
+    - [Requirements Overview](#requirements-overview)
+    - [Quality Goals](#quality-goals)
+    - [Systems Stakeholders](#systems-stakeholders)
+- [Technological Constraints](#technological-constraints)
+- [System Context and Scope](#system-context-and-scope)
+    - [System Context Diagram](#system-context-diagram)
+- [System Context and Scope](#system-context-and-scope)
+    - [Withebox - Container Diagram](#withebox---container-diagram)
+    - [Blackbox - Components Diagram](#blackbox---components-diagram)
+            - [Code Implementation Example](#code-implementation-example)
+        - [Regression Verify](#regression-verify)
+            - [Code Implementation Example](#code-implementation-example)
+        - [Functional Execution and Verify](#functional-execution-and-verify)
+            - [Code Implementation Example](#code-implementation-example)
+        - [Functional Execution](#functional-execution)
+            - [Code Implementation Example](#code-implementation-example)
+        - [Functional Test Configuration](#functional-test-configuration)
+        - [Release Generation](#release-generation)
+            - [Code Implementation Example](#code-implementation-example)
+        - [Stable Preparation/Generation](#stable-preparationgeneration)
+            - [Code Implementation Example](#code-implementation-example)
+        - [Hotfix Generation](#hotfix-generation)
+            - [Code Implementation Example](#code-implementation-example)
+- [Runtime View](#runtime-view)
+    - [Scenario 1 - PR](#scenario-1---pr)
+    - [Scenario 2 - Standard Master Merge](#scenario-2---standard-master-merge)
+    - [Scenario 3 - Stable Release Generation](#scenario-3---stable-release-generation)
+- [Design Decisions](#design-decisions)
+    - [Use of branch rather than tag](#use-of-branch-rather-than-tag)
+    - [Conventional Commits](#conventional-commits)
+    - [Reverts](#reverts)
+- [Technical Risks](#technical-risks)
+- [Results](#results)
 
 <!-- /TOC -->
 
@@ -110,7 +114,7 @@ To address these challenges, I designed and implemented **a multi-layered optimi
     - Increase **Unit Test Coverage to 80%** and **Functional Testing to 30%**.
 
 
-## :dart: Strategic Impact
+## Strategic Impact
 
 <img align="right" width="300" height="300" src="./assets/happy.gif">
 
@@ -130,6 +134,7 @@ The project provided significant improvements in key metrics:
 For more detailed insights, refer to the [Results](./08-Results.md) section.
 
 ## Project Context and Challenges
+
 ![Context](assets/context.png)
 
 This document aim to describe a project that caused high impact over my career on one or more of the following areas:
@@ -156,11 +161,11 @@ The initiative was originated from an effort to automate the change management p
 
 Although the ultimate objective was to seamlessly integrate CICD with the Automated Change Management process, this document primarily focuses on thefirst initiative 
 
->> [!WARNING] 
+> [!WARNING] 
 > **Code Disclaimer** :The code presented in this project is a **simplified version** of the original implementation and is **not intended for production use**. Additionally, **all proprietary and confidential information has been removed** to comply with security and data protection policies.  
 
 
->> [!WARNING] 
+> [!WARNING] 
 > **AI Ussage** : Some of the content of this documentation has been redacted or reviewed by AI to ensure that no sensitive information is shared or to simplify the content as well as summarixing pseudocode that might be copnfusing after the sensitive code removal. Tools used included OpenAI and GH Copitlot.
 
 #### Background
@@ -260,6 +265,8 @@ This section outlines the **high-level strategy** used to resolve the challenges
 - ✅ **Testing automation** improved reliability while maintaining **scalability & maintainability**.  
 - ✅ **Release generation & management** need to follow an **automated, predictable process**.  
 - ✅ **Security & governance** were reinforced via **controlled GitHub workflows & access policies**.  
+
+In General, the strategy was divided into the following key areas:
 
 - :one: Functional Testing & Validation  
 Since Jenkins lacks **efficient functional testing frameworks**, we developed a **custom pipeline-based approach**:  
@@ -379,7 +386,7 @@ This section contain all the delimits of the systems and communications
 
 ![Business System Context Diagram](./assets/uml-render/02-bizContext/02-bizContext.png)
 
-![Technical System Context Diagram](./assets/uml-render/03-techContext/03-techContext.png)
+![Technical System Context Diagram](./assets/uml-render/02-techContext/02-techContext.png)
 
 | Neighbour | Description |
 |:---:|:---:|
@@ -837,7 +844,7 @@ def getTests(String token, Object objectId) {
 
 Functional Test Execution runs out of the JSL Pipeline but inside Jenkins, it loads the libraries on request, JSL only will trigger the master execution, therefore other tests might be called manually. Once the libraries are loaded, it reads the config and proceed to run the tests either on docker or agent. Once finished the tests are verified and the uploaded to Jira to finally cleanup the environments.
 
-![Functional Execution](./challenge-portfolio/assets/uml-render/04.04-ComponentFuncExec/04.04-ComponentFuncExec.png)
+![Functional Execution](./assets/uml-render/04.04-ComponentFuncExec/04.04-ComponentFuncExec.png)
 
 | Component | Description | Inputs | Outputs |
 |:---:|:---:|:---:|:---:|
@@ -1418,6 +1425,37 @@ graph TD
 6. **Post-Release Actions**:
    - If the release process fails, Jenkins publishes the failure to MS Teams.
 
+# 6 Design Decisions
+
+
+- [Design Decisions](#design-decisions)
+    - [Use of branch rather than tag](#use-of-branch-rather-than-tag)
+    - [Conventional Commits](#conventional-commits)
+    - [Reverts](#reverts)
+
+
+This Section aim to document all the architectural decisions taken
+
+## 6.1 Use of branch rather than tag
+
+| Problem | Constraints | Decision |
+| --- | --- | --- |
+| At the moment of selecting the best way to keep a “latest" or stable reference it was given the option to use a tag, in order to create a point on time decision to consider as a functional part of the JSL, other option was the use of a branch that will be updated from time to time | :children_crossing: The selected option need to be able to be reseted or force updated without impacting development or solution running. <br> :children_crossing: Tag and branch concept are refered to git as scm tool used on GitHub | The decision taken is to use a branch as per it point to commit objects instead than a single revision, this will allow an easier manipulation of fixes as well as release update as well as the force push, additionally, according to the git glossary the tag is not changed by a commit and therefore may not be suitable for the solution |
+
+## 6.2 Conventional Commits
+
+| Problem | Constraints | Alternatives | Decision |
+| --- | --- | --- | --- |
+| We need to use an automated release management that is capable to detect what kind of changes were made in order to generate a proper change log and be able to manipulate the releases if required | :children_crossing: The identification of the change as well as the release generation must be automatic | :twisted_rightwards_arrows: Accept any commit but rely on developer to tag the pull requests as they consider <br> :twisted_rightwards_arrows: Use conventional commits types to identify the type | To use conventional commits due that it allow the automatic identification of the change without additional intervention of a developer rather than the identification of the commit. |
+
+## 6.3 Reverts
+
+| Problem | Constraints | Alternatives | Decision |
+| --- | --- | --- | --- |
+| When a revert is required by any reason, the system may identify issues at sonar level due the not tested coverage or similar issues, this might go againts the controls of the standard pipeline if those are forced skipped. | :children_crossing: Sonar consider a revert as a new code <br> :children_crossing: Revert is done automatically from GitHub | :twisted_rightwards_arrows: Manual issues resolution <br> :twisted_rightwards_arrows: Skip controls for reverts | Reverts automatically created from Github can skip the controls due that if they are required is due an issue detected that is impacting the end users. The code is considered to be already in the code in the past and therefore was already tested. |
+
+
+
 # 7 Technical Risks
 
 - [7 Technical Risks](#07-technical-risks)
@@ -1431,7 +1469,7 @@ graph TD
 | Dated Regression Tests | Dated regression Tests  |  |  |
 | Long Term Reverts | In case a revert is required after a feature was introduced to stable, the revert operation might be complex | To create a new fix or feat PR depending in the context that will go to the stable after merge. |  |
 
-# 7 Results
+# 8 Results
 
 <img align="right" width="200" height="200" src="assets/stats.gif">
 

@@ -1,8 +1,5 @@
 <p align="center">
   <a href="" rel="noopener">
-<!-- <img width=200px height=200px src="https://www.jenkins.io/images/logos/atomium/256.png" alt="Jenkins"></a>
-<img width=200px height=200px src="https://avatars.githubusercontent.com/u/70581452?v=4" alt="Jira"></a>
-<img width=200px height=200px src="https://images.seeklogo.com/logo-png/27/2/github-logo-png_seeklogo-273183.png" alt="GiHub"></a> -->
 
 <img src="./assets/banner.webp" alt="GiHub"></a>
 
@@ -35,7 +32,7 @@
 
 - [Table of Contents](#table-of-contents)
 - [Executive Summary](#executive-summary)
-    - [:dart: Strategic Impact](#dart-strategic-impact)
+    - [🎯 Strategic Impact](#-strategic-impact)
     - [Project Context and Challenges](#project-context-and-challenges)
         - [Project Overview](#project-overview)
             - [Background](#background)
