@@ -1,0 +1,82 @@
+@startuml 04.02-ComponentRegVerify
+title Building Block - Whitebox - Component Diagram - Regression Verify
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons"
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include $ICONURL/common.puml
+!include $ICONURL/font-awesome-5/users.puml
+!include $ICONURL/font-awesome-5/mail_bulk.puml
+!include $ICONURL/font-awesome-5/jenkins.puml
+!include $ICONURL/font-awesome-5/github.puml
+!include $ICONURL/devicons/jira.puml
+!include $ICONURL/devicons2/sonarqube_original.puml
+!include $ICONURL/devicons/git.puml
+!include $ICONURL/devicons/npm.puml
+!include $ICONURL/devicons/groovy.puml
+!include $ICONURL/font-awesome/files_o.puml
+
+' System Definition
+
+skinparam component {
+  backgroundColor<<internal>> LightGrey
+  backgroundColor<<external>> White
+}
+
+Person(devops, "DevOps Engineer", "DevOps Engineer Manages Functional Config and JSL Changes")
+Person(collaborator, "DevOps Collaborator", "Collaborate with new code to the JSL")
+Person_Ext(githubapp, "Github_App", "Github App than handle secure communication with GitHub", $sprite="robot")
+
+
+System_Ext(GH,"GitHub", "Standard SCM", $sprite="github") {
+}
+System_Boundary(pipeline,"JSL Pipeline") {
+    Container_Ext(unittest, "UnitTest", "Unit Test Execution", $sprite="groovy") {
+        Component_Ext(compiledRegressionTraces, "Binary Regression Traces", "Unit Test Execution Traces in the compiled environment that are generation on committed code testing")
+
+    }
+    System_Boundary(regression, "JSL Regression Tests", "System inside the JSL Pipeline Capable of checking and detecting tests regressions after execution") {
+        Container_Boundary(regressionVerify,"Regression Verify") {
+            Component(regressionTracesCompare, "Regression Traces Compare", "Compares the regression traces of the unit tests with the files stored")
+            Component_Ext(jenkins,"Jenkins Agent (Container)", "Agent that runs the commit lint process", $sprite="jenkins")
+            Component_Ext(code, "Cloned Copy of the Code", "Cloned copy of the code to be compiled", $sprite="git")
+            Component(resultChecker, "Result Checker", "Checks the results of the regression tests, Informs in case of failure, store the results of the regression tests")
+            Component_Ext(gitHubLibs, "Custom Libraries that supports the GitHub API internally in Jenkins")
+        }
+        Container(funcVerify, "Functional Exec and Verify", "Request the execute of the functional tests and verifies the results")
+    }
+}
+
+System_Boundary(IDE,"IDE") {
+    Component_Ext(regressionTraces, "Local Regression Traces", "Unit Test Execution Traces in the local environment that need to be committed as part of the Code", $sprite="files_o")
+}
+
+Rel_U(devops, regressionTraces, "Generates new traces", "Groovy/Gradle")
+Rel_U(collaborator, regressionTraces,  "Generates new traces", "Groovy/Gradle")
+Rel(devops, GH, "Pushes/review code", "HTTPS/SSH GIT")
+Rel(collaborator, GH, "Pushes code (PR)","HTTPS/SSH GIT")
+Rel_L(githubapp, GH, "Handle secure communication with GitHub","Oauth/HTTPS")
+Rel(unittest, regressionTracesCompare, "Compare the traces of the unit tests", "Groovy/Gradle")
+Rel(regressionTracesCompare, code, "Read the traces of the unit tests", "Groovy/Gradle")
+Rel(regressionTracesCompare, compiledRegressionTraces, "Read the traces of the unit tests", "Groovy/Gradle")
+Rel(regressionTracesCompare, jenkins, "Store the results of the unit tests", "Groovy/Gradle")
+Rel(jenkins, resultChecker, "Read the results of the unit tests", "Groovy/Gradle")
+Rel(resultChecker, gitHubLibs, "Informs GH of the test results", "HTTPS")
+Rel(gitHubLibs, GH, "Execute GH API Requests", "HTTPS")
+Rel(resultChecker, jenkins, "Store the results of the unit tests", "Groovy/Gradle")
+Rel(jenkins, funcVerify, "Request the execution of the functional tests", "Groovy/Gradle/HTTPS")
+
+SHOW_LEGEND()
+
+
+@enduml

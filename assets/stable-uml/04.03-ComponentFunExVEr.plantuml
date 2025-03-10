@@ -1,0 +1,67 @@
+@startuml 04.03-ComponentFunExVEr
+title Building Block - Whitebox - Component Diagram - Functional Test Execution and Verify
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons"
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include $ICONURL/common.puml
+!include $ICONURL/font-awesome-5/jenkins.puml
+!include $ICONURL/devicons/jira.puml
+!include $ICONURL/devicons/groovy.puml
+
+' System Definition
+
+skinparam component {
+  backgroundColor<<internal>> LightGrey
+  backgroundColor<<external>> White
+}
+
+System_Ext(jira,"Jira", "Standard Ticketing tool and Project Management", $sprite="jira")
+
+System_Boundary(pipeline,"JSL Pipeline") {
+
+    System_Boundary(regression, "JSL Regression Tests", "System inside the JSL Pipeline Capable of checking and detecting tests regressions after execution") {
+        Container_Boundary(funcVerify,"Functional Exec and Verify") {
+            Component_Ext(remoteTestExecuter, "Remote Test Executer", "Executes the functional tests in a remote environment (Jenkins Functional Test Pipeline)")
+            Component_Ext(jenkins,"Jenkins Agent (Container)", "Agent that runs the commit lint process", $sprite="jenkins")
+            Component(libJiraPullTestResults, "Jira Puller (libJiraPullTestResults)", "Pulls the test from Jira")
+            Component_Ext(libCheckQAGates, "Check QA Gates (libCheckQAGates)", "External component to compare the results between 2 different jira test results")
+        }
+    }
+
+    System_Boundary(release,"Release Manager", "System in charge of Automatic Release Management After Testing") {
+        Container(relGen, "Release Generation", "Generates the release notes and the release")
+        Container(hotfix, "HotFix/Fix Generation", "Integrates the hotfix in the current, prerelease and stable releases")
+    }
+
+
+}
+
+System_Boundary(functional, "Functional Tests", "System in charge of executing Functional Tests") {
+    Container(functExec,"Functional Test\nExecution")
+}
+
+Rel(remoteTestExecuter, jenkins, "API Pipeline Request", "HTTPS")
+Rel(jenkins, functExec, "Execute Functional Tests", "HTTPS")
+Rel(functExec, jenkins, "Functional Test finished reporting", "HTTPS")
+Rel(libJiraPullTestResults, jira, "Pulls the test from Jira", "HTTPS/XRAY")
+Rel(libJiraPullTestResults, libCheckQAGates, "Send the test results", "HTTPS")
+Rel(libCheckQAGates, jira, "Check previous results", "HTTPS")
+Rel(libCheckQAGates, jenkins, "Inform result", "Groovy")
+Rel(jenkins, relGen, "Request Release Generation", "HTTPS")
+Rel(jenkins, hotfix, "Request Hotfix Generation", "HTTPS")
+
+SHOW_LEGEND()
+
+
+@enduml

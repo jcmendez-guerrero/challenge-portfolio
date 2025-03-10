@@ -1,0 +1,70 @@
+@startuml 04.06-ComponentRelgen
+title Building Block - Whitebox - Component Diagram - HotFix/Fix Generation
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons"
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include $ICONURL/common.puml
+!include $ICONURL/font-awesome-5/users.puml
+!include $ICONURL/font-awesome-5/mail_bulk.puml
+!include $ICONURL/font-awesome-5/jenkins.puml
+!include $ICONURL/font-awesome-5/github.puml
+!include $ICONURL/devicons/jira.puml
+!include $ICONURL/devicons/git.puml
+
+' System Definition
+
+Person(devops, "DevOps Engineer", "DevOps Engineer Manages Functional Config and JSL Changes")
+
+
+Person_Ext(githubapp, "Github_App", "Github App than handle secure communication with GitHub", $sprite="robot")
+
+
+System_Ext(GH,"GitHub", "Standard SCM", $sprite="github")
+
+
+System_Boundary(pipeline,"JSL Pipeline") {
+    System_Boundary(release,"Release Manager", "System in charge of Automatic Release Management After Testing") {
+        Container(relGen, "Release Generation", "Generates the release notes and the release")
+        Container(prepare, "Stable Prepare/Generate", "Prepare the stable branch for the release and needed PRs")
+        Container_Boundary(hotfix, "HotFix/Fix Generation") {
+          Component(typeChecker, "Type checker" ,"System that Checks and review if it is a fix or HotFix", $sprite="groovy")
+          Component(releaseChecker, "Release Checker", "Check the current prerrelease, current release, stable and next prerelease for upgrade", $sprite="groovy")
+          Component(taggerPrUpdate, "Tagger and PR Updater", "System that update the release tags and the needed PRs", $sprite="groovy")
+
+          Component_Ext(code, "Cloned Copy of the Code", "Cloned copy of the code to be compiled", $sprite="git")
+          Component_Ext(gitHubLibs, "Custom Libraries that supports the GitHub API internally in Jenkins")
+        }
+    }
+    System_Boundary(regression, "JSL Regression Tests", "System inside the JSL Pipeline Capable of checking and detecting tests regresions after execution") {
+      Container(funcVerify, "Functional Exec and Verify", "Request the execute of the functional tests and verifies the results")
+    }
+}
+
+Rel(devops, GH, "Approve/Check Code", "HTTPS/SSH Git")
+Rel(githubapp, GH, "Handle secure communication with GitHub","Oauth/HTTPS")
+Rel(funcVerify,hotfix, "Request the generation of a HotFix Release", "groovy")
+Rel(typeChecker,gitHubLibs, "Check the PR for the type of fix", "HTTPS")
+Rel(typeChecker,releaseChecker, "Request Release Checker", "groovy")
+Rel(releaseChecker,code, "Checkfor each case if it is possible to merge", "HTTPS")
+Rel(releaseChecker,taggerPrUpdate, "Request the tagger and PR updater for branch, release and PR updates", "groovy")
+Rel(taggerPrUpdate,code, "Update the branches with the new release contents (force Push if required)", "HTTPS/SSH Git")
+Rel(taggerPrUpdate,relGen, "Request the generation of the release notes and the release", "groovy")
+Rel(taggerPrUpdate,prepare, "Request the generation of the stable release and the needed PRs", "groovy")
+Rel(gitHubLibs, GH, "Execute GH API Requests", "HTTPS")
+
+
+SHOW_LEGEND()
+
+
+@enduml

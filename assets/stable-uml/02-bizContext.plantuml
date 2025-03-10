@@ -1,0 +1,63 @@
+@startuml 02-bizContext
+title Business System Context Diagram
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master
+
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include ICONURL/common.puml
+!include ICONURL/font-awesome-5/users.puml
+!include ICONURL/font-awesome-5/mail_bulk.puml
+!include ICONURL/font-awesome-5/jenkins.puml
+!include ICONURL/font-awesome-5/github.puml
+!include ICONURL/devicons/jira.puml
+
+' System Definition
+
+
+Person(devops, "DevOps Engineer", "DevOps Engineer Manages Functional Config and JSL Changes")
+Person(collaborator, "DevOps Collaborator", "Collaborate with new code to the JSL")
+Person(user, "DevOps User", "User that uses the JSL to deploy new features")
+
+System_Boundary(jenkins,"Jenkins") {
+    System_Boundary(stable,"JSL Automated Stable Release System") {
+        System(functional, "Functional Tests", "System in charge of executing Functional Tests")
+        System_Boundary(pipeline,"JSL Pipeline") {
+            System(release,"Release Manager", "System in charge of Automatic Release Management After Testing")
+            System(regression, "JSL Regression Tests", "System inside the JSL Pipeline Capable of checking and detecting tests regresions after execution")
+        }
+    }    
+}
+
+System_Ext(GH,"GitHub", "Standard SCM", $sprite="github") {
+}
+
+System_Ext(teams,"MS Teams", "Standard Communication Tool",$sprite="img:https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg/2203px-Microsoft_Office_Teams_%282018%E2%80%93present%29.svg.png{scale=0.025}")
+
+System_Ext(jira,"Jira", "Standard Ticketing tool and Project Management", $sprite="jira") {
+}
+
+Rel_U(devops, GH, "Pushes code")
+Rel_U(collaborator, GH, "Pushes code (PR)")
+Rel_U(user, GH, "Consume JSL Release")
+Rel_U(GH, jenkins, "Webhook")
+Rel_D(release, GH, "Manage Releases")
+Rel(jenkins, teams, "Send\nnotifications")
+Rel_U(pipeline, functional, "Execute\nTest")
+Rel_R(functional, jira, "Upload Tests Results")
+Rel(regression, jira, "Pull Test Results")
+Rel(functional, GH, "Pull Config and Pipeline")
+
+SHOW_LEGEND()
+
+@enduml

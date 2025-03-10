@@ -1,0 +1,60 @@
+@startuml 01-ucStable
+Title Use Case Diagram
+
+left to right direction
+
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+!includeurl C4Puml/C4_Sequence.puml
+!includeurl C4Puml/C4_Container.puml
+
+'stdlib users.puml defines sprite "users"
+!include <office/users/users.puml>
+
+Person(devops, "DevOps Engineer ", "Administrate de JSL and provides review to the whole process, releases and peer reviews")
+Person(collaborator, "DevOps Collaborator", "Collaborate with new code to the JSL")
+Person(user, "DevOps User", "User that uses the JSL to deploy new features")
+System(jenkins, "Jenkins", "Jenkins is the CI/CD tool used to automate the release process",$sprite="robot")
+
+Boundary(ucStable, "Jenkins Stable Release") {
+
+    rectangle "Jenkins Stable Release" {
+        usecase "Regresion Test" as regresion
+        usecase "Functional Test\nConfiguration" as funcConf
+        usecase "Functional Test" as functional
+        usecase "Release Generation" as release
+        usecase "Stable Preparation" as prepare
+        usecase "Stable Generation" as stable
+        usecase "Stable Comsumption" as stable
+        usecase "Fix" as fix
+        usecase "Hot Fix" as hotfix
+        usecase "Fast-forward\nFeature" as fffeat
+    }
+
+}
+
+regresion <-- devops
+funcConf <-left- devops
+regresion <-- collaborator
+functional <-- jenkins
+stable <-up- jenkins
+release <-up- jenkins
+
+release ..> functional : include
+release ..> regresion : include
+stable .right.> functional : include
+release .up.> prepare : extend
+funcConf .up.> functional : extend
+prepare .up.> stable : extend
+
+devops -left-> fix
+collaborator -left-> fix
+devops --> fffeat
+
+hotfix .up.> fix : extend
+
+fix .left.> release : include
+fffeat ..> release : include
+
+user --> stable
+
+@enduml
