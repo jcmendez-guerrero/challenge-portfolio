@@ -1,0 +1,89 @@
+@startuml 04.01-ComponentCommit
+title Building Block - Whitebox - Component Diagram - Commit verify
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons"
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include $ICONURL/common.puml
+!include $ICONURL/font-awesome-5/users.puml
+!include $ICONURL/font-awesome-5/mail_bulk.puml
+!include $ICONURL/font-awesome-5/jenkins.puml
+!include $ICONURL/font-awesome-5/github.puml
+!include $ICONURL/devicons/jira.puml
+!include $ICONURL/devicons2/sonarqube_original.puml
+!include $ICONURL/devicons/git.puml
+!include $ICONURL/devicons/npm.puml
+
+' System Definition
+
+skinparam component {
+  backgroundColor<<internal>> LightGrey
+  backgroundColor<<external>> White
+}
+
+Person(devops, "DevOps Engineer", "DevOps Engineer Manages Functional Config and JSL Changes")
+Person(collaborator, "DevOps Collaborator", "Collaborate with new code to the JSL")
+Person_Ext(githubapp, "Github_App", "Github App than handle secure communication with GitHub", $sprite="robot")
+
+
+System_Ext(GH,"GitHub", "Standard SCM", $sprite="github")
+
+System_Boundary(pipeline,"JSL Pipeline") {
+    System_Boundary(release,"Release Manager", "System in charge of Automatic Release Management After Testing") {
+        Container_Boundary(commit,"Commit Verify") {
+            Component_Ext(gitHubLibs, "Custom Libraries that supports the GitHub API internally in Jenkins")
+            Component_Ext(commitLint, "Commit Lint", "Verifies that the commit follow conventional commits ") {
+                json commitlintJson {
+                    "valid" : "boolean",
+                    "errorCount" : "number",
+                    "warningCount" : "number",
+                    "results" : ["valid", "errors"],
+                    "warnings" : [],
+                    "input" : "string"
+                }
+            }
+            Component(resultChecker, "Result Checker", "Checks the results of the commit lint, Informs if the PR is valid or not, store the results of the commit lint")
+            Component(prLabeler, "PR Labeler", "Labels the PR with the results of the commit lint")
+            Component(labelArrayBuilder, "Label Array Builder", "Builds the array of labels to be added to the PR based on the commits received")
+            Component_Ext(jenkins,"Jenkins Agent (Container)", "Agent that runs the commit lint process", $sprite="jenkins")
+            Component_Ext(code, "Cloned Copy of the Code", "Cloned copy of the code to be compiled", $sprite="git")
+
+        }
+    }
+    Container_Ext(build,"Build")
+}
+
+System_Ext(npm,"NPM Public Packages", "Public NPM Packages", $sprite="npm")
+
+
+
+
+Rel(devops, GH, "Pushes/review code", "HTTPS/SSH GIT")
+Rel(collaborator, GH, "Pushes code (PR)","HTTPS/SSH GIT")
+Rel(githubapp, GH, "Handle secure communication with GitHub","Oauth/HTTPS")
+Rel(code,GH,"Clone the code to be compiled","HTTPS/SSH GIT")
+Rel(jenkins, npm, "Install NPM Packages", "HTTPS/NodeJS")
+Rel(commitLint, code, "Use the code to lint the commits of the change", "NodeJS/GIT")
+Rel(commitLint, jenkins, "Store the results of the commit lint")
+Rel(resultChecker, jenkins, "Read the results of the commit lint (JSON)")
+Rel(resultChecker, labelArrayBuilder, "Send the results of the commit lint to the label array builder", "Groovy")
+Rel(labelArrayBuilder, prLabeler, "Label the PR with the results provided ","Groovy")
+Rel(prLabeler, gitHubLibs, "Label the PR with the results of the commit lint", "Groovy")
+Rel(resultChecker, gitHubLibs, "Informs GH in case that the results are not valid", "Groovy")
+Rel(gitHubLibs, GH, "Execute GH API Requests", "HTTPS")
+Rel(jenkins, build, " Request to Start next Stage", "Groovy")
+
+SHOW_LEGEND()
+
+
+@enduml

@@ -1,0 +1,89 @@
+@startuml 04.04-ComponentFuncExec
+title Building Block - Whitebox - Component Diagram - Functional Test Execution
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons"
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include $ICONURL/common.puml
+!include $ICONURL/font-awesome-5/jenkins.puml
+!include $ICONURL/devicons/jira.puml
+!include $ICONURL/devicons/groovy.puml
+!include $ICONURL/devicons2/junit.puml
+!include $ICONURL/devicons2/kubernetes.puml
+!include $ICONURL/devicons2/docker.puml
+
+' System Definition
+
+
+System_Ext(jira,"Jira", "Standard Ticketing tool and Project Management", $sprite="jira")
+System_Ext(k8s,"K8S", "Deployment Platform (Kubernetes as an example)", $sprite="kubernetes")
+
+System_Boundary(stableRel,"JSL Automated Release System") {
+
+    System_Boundary(pipeline,"JSL Pipeline") {
+
+        System_Boundary(regression, "JSL Regression Tests", "System inside the JSL Pipeline Capable of checking and detecting tests regressions after execution") {
+            Container(funcVerify, "Functional Exec and Verify", "Request the execute of the functional tests and verifies the results")
+            Component_Ext(jenkins,"Jenkins Agent (Container)", "Agent that runs JSL Pipeline Stage", $sprite="jenkins")
+        }
+
+    }
+
+    System_Boundary(functional, "Functional Tests", "System in charge of executing Functional Tests") {
+        Container_Boundary(functExec,"Functional Test\nExecution") {
+            Component_Ext(jenkinsST,"Jenkins Agent Functional Standard", "Agent that execute the global test", $sprite="jenkins")
+            Boundary(jenksta, "Jenkins Standard Agent"){
+                Component(libloader, "Library Loader", "Load the libraries to be tested based on the parameters",$sprite="groovy")
+                Component(maploader, "Map Loader", "Load the map of the tests to be executed",$sprite="groovy")
+                Component_Ext(dockerBundler, "Docker Bundler", "Bundles the tests iand required resources",$sprite="docker")
+                Component_Ext(jenkinsFunct,"Jenkins Agent Functional All", "Agent that runs the functional testing", $sprite="jenkins")
+                Boundary(jenkcontainer, "Jenkins Container"){
+                    Component(testExecuter, "Test Executer", "Executes the tests",$sprite="groovy")
+                    Component(testwritter, "Test Writter", "Writes the test results in JUNIT format",$sprite="groovy")
+                }
+                Component(junitTests, "Junit Tests Results", "Junit Tests Results executed",$sprite="junit")
+                Component(postTestActions, "Post Test Actions", "Actions to be executed after the tests (Cleaner, destroy resources, etc)",$sprite="groovy")
+                Component_Ext(testMerger, "Test Merger", "Merges the test results in a single file")
+                Component_Ext(testReporter, "Test Reporter", "Reports the test results in Jira")
+            }
+
+            
+        }
+        Container(funcConf,"Functional Test\nConfiguration",)
+
+    }
+}
+
+Rel(funcVerify, jenkins, "API Pipeline Request", "HTTPS")
+BiRel_R(jenkins, jenkinsST, "Execute Functional Tests & Report Back", "HTTPS")
+Rel_R(jenkinsST, libloader, "Load Libraries", "Groovy")
+Rel_R(libloader, maploader, "Check the Map to be Loaded", "Groovy/YAML")
+BiRel_R(maploader, funcConf, "Load the Map from config", "Groovy/YAML")
+Rel(maploader, dockerBundler, "Bundle the Tests Dockerfile with target config", "Groovy/Docker")
+Rel_L(dockerBundler, jenkinsFunct, "Start container", "Docker")
+Rel(jenkinsFunct, testExecuter, "Execute the Tests (loop)", "Groovy")
+Rel(testExecuter, testwritter, "Pass the Test Results", "Groovy")
+BiRel(testExecuter, k8s, "Deploy to external systems (K8S)", "yaml/HTTPS/kubectl")
+Rel(testwritter, junitTests, "Write the Junit Test Results", "Groovy")
+Rel_R(testwritter, postTestActions, "Execute Post Test Actions (cleanUp)", "Groovy")
+BiRel(postTestActions, k8s, "Clean resources on external systems (K8S)", "HTTPS/kubectl")
+Rel(postTestActions, jenkinsST, "Clean the container", "Docker")
+Rel(postTestActions,testMerger, "")
+Rel(testMerger, junitTests, "Merge the Junit Test Results", "NodeJS, Groovy")
+Rel(testMerger, testReporter, "Pass the merged results", "Groovy")
+Rel(testReporter, jira, "Report the results in Jira", "HTTPS")
+
+SHOW_LEGEND()
+
+
+@enduml

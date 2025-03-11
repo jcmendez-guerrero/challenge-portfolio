@@ -1,0 +1,102 @@
+@startuml 03-ContainerDiag
+title Building Block - WhiteBox 1 - Container Diagram
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons"
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include $ICONURL/common.puml
+!include $ICONURL/font-awesome-5/users.puml
+!include $ICONURL/font-awesome-5/mail_bulk.puml
+!include $ICONURL/font-awesome-5/jenkins.puml
+!include $ICONURL/font-awesome-5/github.puml
+!include $ICONURL/devicons/jira.puml
+!include $ICONURL/devicons2/sonarqube_original.puml
+
+' System Definition
+
+skinparam component {
+  backgroundColor<<internal>> LightGrey
+  backgroundColor<<external>> White
+}
+
+Person(devops, "DevOps Engineer", "DevOps Engineer Manages Functional Config and JSL Changes")
+Person(collaborator, "DevOps Collaborator", "Collaborate with new code to the JSL")
+Person(user, "DevOps User", "User that uses the JSL to deploy new features")
+
+
+System_Ext(GH,"GitHub", "Standard SCM", $sprite="github") {
+}
+
+System_Ext(teams,"MS Teams", "Standard Communication Tool",$sprite="img:https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Microsoft_Office_Teams_%282018%E2%80%93present%29.svg/2203px-Microsoft_Office_Teams_%282018%E2%80%93present%29.svg.png{scale=0.025}")
+
+System_Ext(jira,"Jira", "Standard Ticketing tool and Project Management", $sprite="jira") {
+}
+
+
+System_Boundary(stableRel,"JSL Automated Release System") {
+    System_Boundary(functional, "Functional Tests", "System in charge of executing Functional Tests") {
+        Container(funcConf,"Functional Test\nConfiguration",)
+        Container(functExec,"Functional Test\nExecution")
+    }
+    System_Boundary(pipeline,"JSL Pipeline") {
+        System_Boundary(release,"Release Manager", "System in charge of Automatic Release Management After Testing") {
+            Container(commit, "Commit Verify", "Verifies that the commit follow conventional commits ")
+            Container(relGen, "Release Generation", "Generates the release notes and the release")
+            Container(prepare, "Stable Prepare/Generate", "Prepare the stable branch for the release and needed PRs")
+            Container(hotfix, "HotFix/Fix Generation", "Integrates the hotfix in the current, prerelease and stable releases")
+        }
+        Container_Ext(build,"Build")
+        Container_Ext(unit, "Unit Test")
+        System_Boundary(regression, "JSL Regression Tests", "System inside the JSL Pipeline Capable of checking and detecting tests regresions after execution") {
+            Container(regVerify, "Regression Verify", "Verifies Unit tests traces looking for regressions and generates failure or success")
+            Container(funcVerify, "Functional Exec and Verify", "Request the execute of the functional tests and verifies the results")
+        }
+        Container_Ext(otherSteps, "Other JSL Pipeline Steps")
+    }
+}
+
+
+Rel(devops, GH, "Pushes code")
+Rel(collaborator, GH, "Pushes code (PR)")
+Rel(user, GH, "Consume JSL Release")
+
+Rel_U(devops, teams, "Read Status Notifications and Release Notifications")
+Rel_U(collaborator, teams, "Read Release Notifications and ONLY PR Notifications")
+Rel_U(user, teams, "Read Release Notifications")
+
+Rel_D(functExec, jira, "Upload Test Results")
+Rel(relGen, teams, "Post Release Notes and Status")
+
+Rel(commit, GH, "label PR\nor\nreject it.")
+Rel(commit, build, "")
+Rel(relGen, prepare, "")
+Rel(relGen, GH, "Create Release")
+Rel(prepare, GH, "Create PR\nand\nUpdate Stable")
+Rel(prepare, GH, "Update Tags")
+Rel(build, unit, "")
+Rel(unit, regVerify, "")
+Rel(regVerify, funcVerify, "")
+BiRel(funcVerify, functExec, "Execute Tests and report result back")
+Rel_D(funcVerify, jira, "Pull Test Results")
+Rel(funcVerify, regFuncVerify, "")
+Rel(regFuncVerify, otherSteps, "")
+Rel(otherSteps, relGen, "If All Steps\nare OK")
+hotfix ..> relGen : include
+prepare ..> relGen : include
+
+funcConf .left.> GH : Load Config from GitHub
+
+SHOW_LEGEND()
+
+
+@enduml
