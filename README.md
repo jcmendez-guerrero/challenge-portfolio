@@ -17,9 +17,6 @@
 	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/jenkins.png" alt="Jenkins" title="Jenkins"/></code>
 </div>
 
-
-</div>
-
 # Table of Contents
 
 <!-- TOC -->

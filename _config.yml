@@ -1,6 +1,8 @@
 remote_theme: pages-themes/architect@v0.2.0
 
 title: CI/CD Shared Libraries Release Management Automation
+
+repository: jcmendez-guerrero/challenge-portfolio
 tagline: A docummentation site for a project that provided a huge impact
 description: >-
   A docummentation site for a project that provided a huge impact
