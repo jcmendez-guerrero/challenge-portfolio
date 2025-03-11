@@ -4,10 +4,11 @@
 
 <!-- TOC -->
 
-- [5 Runtime View](#5-runtime-view)
-    - [5.1 Scenario 1 - PR](#51-scenario-1---pr)
-    - [5.2 Scenario 2 - Standard Master Merge](#52-scenario-2---standard-master-merge)
-    - [5.3 Scenario 3 - Stable Release Generation](#53-scenario-3---stable-release-generation)
+- [Runtime View](#runtime-view)
+    - [Scenario 1 - PR](#scenario-1---pr)
+    - [Scenario 2 - Standard Master Merge](#scenario-2---standard-master-merge)
+    - [Scenario 3 - Stable Release Generation](#scenario-3---stable-release-generation)
+- [Solution Content](#solution-content)
 
 <!-- /TOC -->
 
@@ -196,3 +197,15 @@ graph TD
 6. **Post-Release Actions**:
    - If the release process fails, Jenkins publishes the failure to MS Teams.
 
+<!-- CONTENTTABLE:START -->
+# Solution Content
+
+1. [Introduction and Goals](01-introduction-and-goals.md)
+2. [Technical Constraints](02-technical-constraints.md)
+3. [System Context and Scope](03-system-context-and-scope.md)
+4. [Building Block View](04-building-block-view.md)
+5. [Runtime Overview](05-RuntimeOverview.md)
+6. [Design Decisions](06-design-decisions.md)
+7. [Technical Risks](07-technical-risks.md)
+8. [Results](08-Results.md)
+<!-- CONTENTTABLE:END -->

@@ -2,10 +2,11 @@
 
 <!-- TOC -->
 
-- [1 Introduction and Goals](#01-introduction-and-goals)
-    - [1.1 Requirements Overview](#11-requirements-overview)
-    - [1.2 Quality Goals](#12-quality-goals)
-    - [1.3 Systems Stakeholders](#13-systems-stakeholders)
+- [Introduction and Goals](#introduction-and-goals)
+    - [Requirements Overview](#requirements-overview)
+    - [Quality Goals](#quality-goals)
+    - [Systems Stakeholders](#systems-stakeholders)
+- [Solution Content](#solution-content)
 
 <!-- /TOC -->
 
@@ -54,3 +55,17 @@ Based on [ISO 25010](https://www.iso.org/es/contents/data/standard/07/81/78176.h
 | DevOps Collaborator | Collaborate with new code to the JSL | - Wants   to add new features or fixes to the JSL. <br> - Needs to generate or regenerate regression traces. <br> - Need to be informed on the issues in their pull request. |
 | DevOps Users | Use the   JSL as part of their pipelines | Want an   stable and functional library version that does not require changes in self pipelines in time.|
 | GitHub App | Application that will be used aas an automated layer to authenticate M2M to the system and GitHub | - Wants   to be able to authenticate to GitHub and Jenkins. <br> - Needs to be able to generate branches and pull requests. <br> - Needs to be able to generate releases. |
+
+
+<!-- CONTENTTABLE:START -->
+# Solution Content
+
+1. [Introduction and Goals](01-introduction-and-goals.md)
+2. [Technical Constraints](02-technical-constraints.md)
+3. [System Context and Scope](03-system-context-and-scope.md)
+4. [Building Block View](04-building-block-view.md)
+5. [Runtime Overview](05-RuntimeOverview.md)
+6. [Design Decisions](06-design-decisions.md)
+7. [Technical Risks](07-technical-risks.md)
+8. [Results](08-Results.md)
+<!-- CONTENTTABLE:END -->

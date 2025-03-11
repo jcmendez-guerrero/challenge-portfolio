@@ -1,8 +1,5 @@
 <p align="center">
   <a href="" rel="noopener">
-<!-- <img width=200px height=200px src="https://www.jenkins.io/images/logos/atomium/256.png" alt="Jenkins"></a>
-<img width=200px height=200px src="https://avatars.githubusercontent.com/u/70581452?v=4" alt="Jira"></a>
-<img width=200px height=200px src="https://images.seeklogo.com/logo-png/27/2/github-logo-png_seeklogo-273183.png" alt="GiHub"></a> -->
 
 <img src="./assets/banner.webp" alt="GiHub"></a>
 
@@ -10,12 +7,6 @@
 </p>
 
 <h3 align="center">CI/CD Shared Libraries Release Management Automation</h3>
-
-<div align="center">
-
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-
 <div align="center">
   <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/git.png" alt="Git" title="Git"/></code>
   <code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/github.png" alt="GitHub" title="GitHub"/></code>
@@ -31,19 +22,18 @@
 
 # Table of Contents
 
+
 <!-- TOC -->
 
 - [Table of Contents](#table-of-contents)
 - [Executive Summary](#executive-summary)
-    - [Strategic Impact](#strategic-impact)
+    - [🎯 Strategic Impact](#-strategic-impact)
     - [Project Context and Challenges](#project-context-and-challenges)
         - [Project Overview](#project-overview)
             - [Background](#background)
             - [DORA Devops KPI](#dora-devops-kpi)
             - [Objectives](#objectives)
             - [Solution Strategy](#solution-strategy)
-- [Solution Contents](#solution-contents)
-- [Introduction and Goals](#introduction-and-goals)
     - [Requirements Overview](#requirements-overview)
     - [Quality Goals](#quality-goals)
     - [Systems Stakeholders](#systems-stakeholders)
@@ -133,8 +123,7 @@ The project provided significant improvements in key metrics:
 
 For more detailed insights, refer to the [Results](./08-Results.md) section.
 
-## Project Context and Challenges
-
+##  2. <a name='ProjectContextandChallenges'></a>Project Context and Challenges
 ![Context](assets/context.png)
 
 This document aim to describe a project that caused high impact over my career on one or more of the following areas:
@@ -149,7 +138,7 @@ This document aim to describe a project that caused high impact over my career o
 - Cloud cost optimizations
 - Security
 
-### Project Overview
+###  2.1. <a name='ProjectOverview'></a>Project Overview
 
 
 This initiative was designed to **enhance trust, reliability, and adoption** of the shared libraries that serve as the **core foundation of the enterprise CI/CD system**. This project played a **crucial role in accelerating DevSecOps adoption** by ensuring development teams had **a stable and reliable** set of shared libraries, ultimately **reducing deployment risks and increasing time-to-market efficiency** for mature applications.  
@@ -168,7 +157,7 @@ Although the ultimate objective was to seamlessly integrate CICD with the Automa
 > [!WARNING] 
 > **AI Ussage** : Some of the content of this documentation has been redacted or reviewed by AI to ensure that no sensitive information is shared or to simplify the content as well as summarixing pseudocode that might be copnfusing after the sensitive code removal. Tools used included OpenAI and GH Copitlot.
 
-#### Background
+####  2.1.1. <a name='Background'></a>Background
 
 In **2022**, a leading telecommunications company embarked on a massive DevSecOps transformation project, aiming to onboard **over 3,000 repositories across 1,000 applications** to adopt **DevSecOps standards**. The **Jenkins Shared Libraries team**, a group of just **five engineers**, was responsible for maintaining the **core CI/CD automation layer**.  
 
@@ -211,7 +200,7 @@ At the time, Jenkins Shared Libraries **lacked the stability required to support
 
 By addressing these challenges, this project played a key role in accelerating DevSecOps adoption, improving CI/CD reliability, and enabling faster, more secure software delivery.  
 
-#### DORA Devops KPI
+####  2.1.2. <a name='DORADevopsKPI'></a>DORA Devops KPI
 
 ![DORA](https://dora.dev/guides/dora-metrics-four-keys/dora-metrics-four-keys.png)
 
@@ -219,43 +208,32 @@ The [DORA](https://dora.dev/guides/dora-metrics-four-keys/) metrics are a set of
 
 | KPI | Low | Medium | High | Elite |
 |-----|-----|--------|------|-------|
-| Deployment Frequency | Less than a month | 1/month - 1/week | 1/week - 1/day | On demand |
-| Avg deployment speed | 2h | 30-120 minutes | 15-30 minutes | < 15 minutes |
-| Average time for changes | more than a month | 1 week - 1 month | 1 day - 1 week | < 1 day |
-| MTTR (Mean Time to Restore) | more than a week | 1 day - 1 week | 1 day - 1 hour | < 1 hour |
-Change Failure Rate | > 45%| 31-45% | 16-30% | 0-15% |
-| Code Quality Bug Score | At last 1 blocker or critical Bug (E & D Score) | At least 1 major Bug (C Score) | At least 1 minor Bug (B Score) | No Bugs (A Score) |
-| Static Application Security Testing (SAST) | At last 1 blocker or critical Vulnerability (E & D Score) | At least 1 major Vulnerability (C Score) | At least 1 minor Vulnerability (B Score) | Info Only (A Score) |
-Dependency Vulnerabilities | At last 1 Critical or HighSeverity Level |  At least 1 Medium Severity Level | At least 1 Low Severity Level | No Vulnerabilities |
-| Test Automation | Less than 20% |20-80% | >80% | >80% |
-| Functional Testing | No | All Test Run | All Test Pass | All tests Pass |
+| **Deployment Frequency** | Less than a month | 1/month - 1/week | 1/week - 1/day | On demand |
+| **Avg deployment speed** | 2h | 30-120 minutes | 15-30 minutes | < 15 minutes |
+| **Average time for changes** | more than a month | 1 week - 1 month | 1 day - 1 week | < 1 day |
+| **MTTR (Mean Time to Restore)** | more than a week | 1 day - 1 week | 1 day - 1 hour | < 1 hour |
+| **Change Failure Rate** | > 45%| 31-45% | 16-30% | 0-15% |
+| **Code Quality Bug Score** | At last 1 blocker or critical Bug (E & D Score) | At least 1 major Bug (C Score) | At least 1 minor Bug (B Score) | No Bugs (A Score) |
+| **Static Application Security Testing (SAST)** | At last 1 blocker or critical Vulnerability (E & D Score) | At least 1 major Vulnerability (C Score) | At least 1 minor Vulnerability (B Score) | Info Only (A Score) |
+| **Dependency Vulnerabilities** | At last 1 Critical or HighSeverity Level |  At least 1 Medium Severity Level | At least 1 Low Severity Level | No Vulnerabilities |
+| **Test Automation** | Less than 20% |20-80% | >80% | >80% |
+| **Functional Testing** | No | All Test Run | All Test Pass | All tests Pass |
 
 This in important to understand what is a mature application and what was the objective of the JSL improvements.
 
 
-#### Objectives
+####  2.1.3. <a name='Objectives'></a>Objectives
 
 The main objectives of this project were:
 
-| Objective ID | Objective | Details |
+| **Objective ID** | Objective | Details |
 |--------------|-----------|---------|
-| OBJ-001 | Increase Maturity (**[DORA](#dora-devops-kpi) HIGH** ) of the Jenkins Shared Libraries and related core components | - Increase Unit Test Coverage to 80%<br>- Implement Functional Testing with at least 30% of coverage<br>- Implement Regression Testing for Unit and Functional Testing<br>- Fix SonarQube Issues or justify the existence of them |
-| OBJ-002 | Create a way to automatically generate Release Notes and Change Logs | - Releases should be automatically updated each 15 days to ensure features are under testing on latest code and be incorporated to Stable when ready for production<br>- Hot Fixes should be automatically included on stable release if possible<br>- Fixes should be included on current release if possible |
-| OBJ-003 | Create a way to automatically update the applications that are using the Jenkins Shared Libraries and related core components | |
+| **OBJ-001** | Increase Maturity (**[DORA](#dora-devops-kpi) HIGH** ) of the Jenkins Shared Libraries and related core components | - Increase Unit Test Coverage to 80%<br>- Implement Functional Testing with at least 30% of coverage<br>- Implement Regression Testing for Unit and Functional Testing<br>- Fix SonarQube Issues or justify the existence of them |
+| **OBJ-002** | Create a way to automatically generate Release Notes and Change Logs | - Releases should be automatically updated each 15 days to ensure features are under testing on latest code and be incorporated to Stable when ready for production<br>- Hot Fixes should be automatically included on stable release if possible<br>- Fixes should be included on current release if possible |
+| **OBJ-003** | Create a way to automatically update the applications that are using the Jenkins Shared Libraries and related core components | |
 
 
-In parallel we should be able to create a DevSecOps GCR that will be able to be executed automatically for the mature applications based on automatic analysis criteria.
-
-| Objective ID | Objective | Details |
-|--------------|-----------|---------|
-| OBJ-004 | Automate system communication with ServiceNow for deployment approval | - Pipeline communicates with ServiceNow to get approval for deploying code to production |
-| OBJ-005 | Automate pre-production evidence gathering | - Automatically gather change log, peer review, SonarQube report |
-| OBJ-006 | Validate code variables | - Validate production branch, tag names, payload, implementers, testers |
-| OBJ-007 | Automate code validation, promotion, and deployment | - Automatically validate, promote, and deploy code to production |
-| OBJ-008 | Automate status updates | - Automatically update status with deployment result, smoke test, alternate stats, quality gates by the pipeline |
-
-
-#### Solution Strategy
+####  2.1.4. <a name='SolutionStrategy'></a>Solution Strategy
 
 
 ![AllInOne](assets/allinone.gif)  
@@ -265,8 +243,6 @@ This section outlines the **high-level strategy** used to resolve the challenges
 - ✅ **Testing automation** improved reliability while maintaining **scalability & maintainability**.  
 - ✅ **Release generation & management** need to follow an **automated, predictable process**.  
 - ✅ **Security & governance** were reinforced via **controlled GitHub workflows & access policies**.  
-
-In General, the strategy was divided into the following key areas:
 
 - :one: Functional Testing & Validation  
 Since Jenkins lacks **efficient functional testing frameworks**, we developed a **custom pipeline-based approach**:  
@@ -295,24 +271,15 @@ Since Jenkins lacks **efficient functional testing frameworks**, we developed a 
 - :six: Automated Release Notes
     - **GitHub Release Notes System** is used to document changes. based on **[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)** which are enforced to **auto-classify changes (fix, feat, chore, etc.)**.  
 
-# Solution Contents
-
-- [1 Introduction and Goals](./01-introduction-and-goals.md)
-- [2 Technological Constraints](./02-technical-constraints.md)
-- [3 System Context and Scope](./03-system-context-and-scope.md)
-- [4 Building Block](./04-building-block-view.md)
-- [5 System Design](./05-system-design.md)
-- [6 Design Dessions](./06-desing-decisions.md)
-- [7 Technical risks](./07-technical-risks-.md)
-- [8 Results](./08-Results.md)
-
-# 1 Introduction and Goals
 
 
-- [1 Introduction and Goals](#01-introduction-and-goals)
-    - [1.1 Requirements Overview](#11-requirements-overview)
-    - [1.2 Quality Goals](#12-quality-goals)
-    - [1.3 Systems Stakeholders](#13-systems-stakeholders)
+- [Introduction and Goals](#introduction-and-goals)
+    - [Requirements Overview](#requirements-overview)
+    - [Quality Goals](#quality-goals)
+    - [Systems Stakeholders](#systems-stakeholders)
+- [Solution Content](#solution-content)
+
+
 
 The overall goal is to be able to have a stable and functionally tested release for the JSL that can be seamlessly used by the different teams to operate their pipelines, with the capability to receive fixes in the shorter term as possible and features in a maximum period of one month. Once done, the libraries should be prepared to integrate with the Automatic Change Management process to be able to be used by the mature applications.
 
@@ -360,7 +327,14 @@ Based on [ISO 25010](https://www.iso.org/es/contents/data/standard/07/81/78176.h
 | DevOps Users | Use the   JSL as part of their pipelines | Want an   stable and functional library version that does not require changes in self pipelines in time.|
 | GitHub App | Application that will be used aas an automated layer to authenticate M2M to the system and GitHub | - Wants   to be able to authenticate to GitHub and Jenkins. <br> - Needs to be able to generate branches and pull requests. <br> - Needs to be able to generate releases. |
 
-# 2. Technological Constraints
+
+# 2 Technological Constraints
+
+
+
+- [Technological Constraints](#technological-constraints)
+- [Solution Content](#solution-content)
+
 
 
 At the moment of the design of the solution the following constraints were considered:
@@ -374,8 +348,12 @@ At the moment of the design of the solution the following constraints were consi
 
 # 3 System Context and Scope
 
-- [3 System Context and Scope](#03-system-context-and-scope)
-    - [3.1 System Context Diagram](#31-system-context-diagram)
+
+
+- [System Context and Scope](#system-context-and-scope)
+    - [System Context Diagram](#system-context-diagram)
+- [Solution Content](#solution-content)
+
 
 
 This architecture follow the patterns of [C4 Model](https://c4model.com/) and the [4+1 Architectural View Model](https://en.wikipedia.org/wiki/4%2B1_architectural_view_model)
@@ -397,9 +375,12 @@ This section contain all the delimits of the systems and communications
 | Jenkins | Build system which will execute the different componentes and pipelines |
 | Apigee | API Gateway used to communicate Internet Apps to Jenkins |
 
+
 # 4 System Context and Scope
 
-- [4 System Context and Scope](#04-system-context-and-scope)
+
+
+- [4 System Context and Scope](#4-system-context-and-scope)
     - [4.1 Withebox - Container Diagram](#41-withebox---container-diagram)
     - [4.2 Blackbox - Components Diagram](#42-blackbox---components-diagram)
             - [4.2.1.1 Code Implementation Example](#4211-code-implementation-example)
@@ -416,6 +397,8 @@ This section contain all the delimits of the systems and communications
             - [4.2.7.1 Code Implementation Example](#4271-code-implementation-example)
         - [4.2.8 Hotfix Generation](#428-hotfix-generation)
             - [4.2.8.1 Code Implementation Example](#4281-code-implementation-example)
+
+
 
 Based on the context diagrams we can detail the different components of the solution
 
@@ -637,7 +620,7 @@ class GitHubDeploymentCreateTest extends GenericSuccessTest {
     @Override
     void setUp() throws Exception {
         super.setUp()
-    callStackPath = 'test/resources/callstacks/'
+		callStackPath = 'test/resources/callstacks/'
         [...]
 
     }
@@ -729,13 +712,13 @@ def getAuthorizationToken(def xrayCredentialId) {
     while (retries > 0) {
         def sleepTime = maxWaitForSeconds * (1/retries)
         withCredentials([file(credentialsId: xrayCredentialId, variable: 'XRAY_CREDENTIALS_FILE')]) {
-          def jira_file = sh script: """
+	        def jira_file = sh script: """
             set + x
             cat \$XRAY_CREDENTIALS_FILE
             """,label: 'getting XRAY credentials',returnStdout: true
             
             def CLIENT_ID = (jira_file.tokenize('\n')[0]).tokenize('=')[1]
-          def CLIENT_SECRET = (jira_file.tokenize('\n')[1]).tokenize('=')[1]
+	        def CLIENT_SECRET = (jira_file.tokenize('\n')[1]).tokenize('=')[1]
 
             tokenResponse = sh script: """[..]
             """,label: 'getting authentication token', returnStdout: true
@@ -802,7 +785,7 @@ def getTests(String token, Object objectId) {
         def totalTests = getTotalTestsCount(token, objectId) 
         def limit = 100
         def totalTestsCeil = (totalTests + limit - 1).intdiv(limit)
-      boolean flag = false
+	    boolean flag = false
         for (def test = 0; test < totalTestsCeil; test++) {
             def testResultsResponse = ''
             def startAt = test * limit
@@ -815,7 +798,7 @@ def getTests(String token, Object objectId) {
                 def testObjectCount = 1
                 len = object2.data.getTestPlan.tests.results.size()
                 for (def value: object2.data.getTestPlan.tests.results) {
-              def new_test = JsonOutput.toJson([testKey: "${value.jira.key}", status: "${value.status.name}"])
+			        def new_test = JsonOutput.toJson([testKey: "${value.jira.key}", status: "${value.status.name}"])
                     output = output + new_test
                     if (testObjectCount != len || test != totalTestsCeil - 1) {
                         output = output + ','
@@ -1234,10 +1217,14 @@ In general  the code is designed with a general fix calculation and a iteration 
 
 ![Runtime](assets/runtime.gif)
 
-- [5 Runtime View](#05-runtime-view)
-    - [5.1 Scenario 1 - PR](#51-scenario-1---pr)
-    - [5.2 Scenario 2 - Standard Master Merge](#52-scenario-2---standard-master-merge)
-    - [5.3 Scenario 3 - Stable Release Generation](#53-scenario-3---stable-release-generation)
+
+
+- [Runtime View](#runtime-view)
+    - [Scenario 1 - PR](#scenario-1---pr)
+    - [Scenario 2 - Standard Master Merge](#scenario-2---standard-master-merge)
+    - [Scenario 3 - Stable Release Generation](#scenario-3---stable-release-generation)
+- [Solution Content](#solution-content)
+
 
 
 
@@ -1428,10 +1415,13 @@ graph TD
 # 6 Design Decisions
 
 
+
 - [Design Decisions](#design-decisions)
     - [Use of branch rather than tag](#use-of-branch-rather-than-tag)
     - [Conventional Commits](#conventional-commits)
     - [Reverts](#reverts)
+- [CONTENT](#content)
+
 
 
 This Section aim to document all the architectural decisions taken
@@ -1455,10 +1445,11 @@ This Section aim to document all the architectural decisions taken
 | When a revert is required by any reason, the system may identify issues at sonar level due the not tested coverage or similar issues, this might go againts the controls of the standard pipeline if those are forced skipped. | :children_crossing: Sonar consider a revert as a new code <br> :children_crossing: Revert is done automatically from GitHub | :twisted_rightwards_arrows: Manual issues resolution <br> :twisted_rightwards_arrows: Skip controls for reverts | Reverts automatically created from Github can skip the controls due that if they are required is due an issue detected that is impacting the end users. The code is considered to be already in the code in the past and therefore was already tested. |
 
 
-
 # 7 Technical Risks
 
-- [7 Technical Risks](#07-technical-risks)
+
+- [7 Technical Risks](#7-technical-risks)
+
 
 
 | Risk/Debt | Description | Mitigation/Additional Info |  |
@@ -1474,6 +1465,7 @@ This Section aim to document all the architectural decisions taken
 <img align="right" width="200" height="200" src="assets/stats.gif">
 
 From the moment of the launch the general adoption by the High Teams was very good, the teams were able to use the JSL without any major issue and the feedback was very positive as per they were able to have more information on the changes being made across the libraries with the release notes:
+
 
 
 ![Release Notes](./assets/notification.png)
@@ -1496,6 +1488,6 @@ Additionally there were some results that were not expected as for example the g
 
 Finally, please remember that the objective was to be able to automate change management, this change helped not only to fulfil those requirements but to help in the delivery of 84% of the roadmap, increasing from 42% to almost 72% in the first month after delivery.
 
-![Roadmap](./assets/roadmap.png)
+![Roadmap](./assets/Roadmap.png)
 
 
