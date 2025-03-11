@@ -1,0 +1,66 @@
+@startuml 04.05-ComponentFuncConf
+title Building Block - Whitebox - Component Diagram - Functional Test Configuration
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons"
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include $ICONURL/common.puml
+!include $ICONURL/font-awesome-5/jenkins.puml
+!include $ICONURL/devicons/jira.puml
+!include $ICONURL/devicons/groovy.puml
+!include $ICONURL/font-awesome-5/github.puml
+!include $ICONURL/font-awesome-5/npm.puml
+!include $ICONURL/devicons2/yaml.puml
+
+' System Definition
+
+
+Person(devops, "DevOps Engineer", "DevOps Engineer Manages Functional Config and JSL Changes")
+Person(collaborator, "DevOps Collaborator", "Collaborate with new code to the JSL")
+Person_Ext(githubapp, "Github_App", "Github App than handle secure communication with GitHub", $sprite="robot")
+
+System_Ext(GH,"GitHub", "Standard SCM", $sprite="github")
+
+
+
+System_Boundary(stableRel,"JSL Automated Release System") {
+
+    System_Boundary(functional, "Functional Tests", "System in charge of executing Functional Tests") {
+        Container(functExec,"Functional Test\nExecution")
+        Container_Boundary(funcConf,"Functional Test\nConfiguration") {
+            Component(linter, "Config Linter", "Linter that checks the conf for the functional tests is correct",$sprite="npm")
+            Component(configmap, "Config Map", "Map that contains the configuration for the functional tests",$sprite="yaml") {
+                json configMap {
+                    "TestSuites" : ["libary"],
+                    "library" : ["string","testCases"],
+                    "testCases" : ["name", "args"]
+                }
+            }
+            Component_Ext(gitHubLibs, "Custom Libraries that supports the GitHub API internally in Jenkins")
+        }
+
+    }
+}
+
+Rel(devops, GH, "Pushes/review code", "HTTPS/SSH GIT")
+Rel(collaborator, GH, "Pushes code (PR)","HTTPS/SSH GIT")
+Rel(githubapp, GH, "Handle secure communication with GitHub","Oauth/HTTPS")
+Rel(linter, configmap, "Check the configuration is correct")
+Rel(linter,gitHubLibs, "Report the results of the linter")
+Rel(gitHubLibs, GH, "Report the results of the linter and Pass/Fail the PR Check")
+Rel(functExec, configmap, "Use the configuration to execute the functional tests")
+
+SHOW_LEGEND()
+
+
+@enduml

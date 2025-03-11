@@ -1,0 +1,61 @@
+@startuml 04.06-ComponentRelgen
+title Building Block - Whitebox - Component Diagram - Stable Prepare/Generation
+' Import external Libraries
+' C4
+!define C4Puml https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master
+'Icons
+!$ICONURL = "https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v3.0.0/icons"
+' Global C4 Definition
+' !include C4Puml/C4.puml
+!include C4Puml/C4_Context.puml
+!include C4Puml/C4_Component.puml
+!include C4Puml/C4_Container.puml
+!include C4Puml/C4_Deployment.puml
+
+' Import icons
+' Icon Definition
+!include $ICONURL/common.puml
+!include $ICONURL/font-awesome-5/users.puml
+!include $ICONURL/font-awesome-5/mail_bulk.puml
+!include $ICONURL/font-awesome-5/jenkins.puml
+!include $ICONURL/font-awesome-5/github.puml
+!include $ICONURL/devicons/jira.puml
+!include $ICONURL/devicons/git.puml
+!include $ICONURL/devicons/groovy.puml
+
+' System Definition
+
+Person(devops, "DevOps Engineer", "DevOps Engineer Manages Functional Config and JSL Changes")
+
+
+Person_Ext(githubapp, "Github_App", "Github App than handle secure communication with GitHub", $sprite="robot")
+
+
+System_Ext(GH,"GitHub", "Standard SCM", $sprite="github")
+
+
+System_Boundary(pipeline,"JSL Pipeline") {
+    System_Boundary(release,"Release Manager", "System in charge of Automatic Release Management After Testing") {
+        Container(relGen, "Release Generation", "Generates the release notes and the release")
+        Container_Boundary(prepare, "Stable Prepare/Generate") {
+          Component(releaseChecker, "Release Checker", "Check the current prerrelease, current release, stable and next prerelease for upgrade", $sprite="groovy")
+          Component(branchUpdater, "Branch Updater", "Update the branches with the new release contents and force push", $sprite="groovy")
+          Component_Ext(code, "Cloned Copy of the Code", "Cloned copy of the code to be compiled", $sprite="git")
+          Component_Ext(gitHubLibs, "Custom Libraries that supports the GitHub API internally in Jenkins")
+        }
+    }
+}
+
+Rel(devops, GH, "Approve/Check Code", "HTTPS/SSH Git")
+Rel(githubapp, GH, "Handle secure communication with GitHub","Oauth/HTTPS")
+BiRel(relGen,releaseChecker, "Request to generate stable\nRequest to generate Release", "groovy")
+Rel(releaseChecker, gitHubLibs, "Check the current release and prerelease and stable", "HTTPS")
+Rel(releaseChecker, branchUpdater, "Update the branches with the new release contents", "HTTPS")
+Rel(branchUpdater, code, "Update the branches with the new release contents (force Push if required)", "HTTPS")
+Rel(gitHubLibs, GH, "Execute GH API Requests", "HTTPS")
+
+
+SHOW_LEGEND()
+
+
+@enduml
