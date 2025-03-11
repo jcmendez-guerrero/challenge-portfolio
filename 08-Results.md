@@ -1,9 +1,10 @@
 # 8 Results
+<!-- TOC -->
 
-<img align="right" width="200" height="200" src="assets/stats.gif">
+- [Results](#results)
+- [Solution Content](#solution-content)
 
-From the moment of the launch the general adoption by the High Teams was very good, the teams were able to use the JSL without any major issue and the feedback was very positive as per they were able to have more information on the changes being made across the libraries with the release notes:
-
+<!-- /TOC -->
 
 
 ![Release Notes](./assets/notification.png)

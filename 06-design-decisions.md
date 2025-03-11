@@ -6,7 +6,7 @@
     - [Use of branch rather than tag](#use-of-branch-rather-than-tag)
     - [Conventional Commits](#conventional-commits)
     - [Reverts](#reverts)
-- [CONTENT](#content)
+- [Solution Content](#solution-content)
 
 <!-- /TOC -->
 
