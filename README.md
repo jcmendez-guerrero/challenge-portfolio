@@ -7,12 +7,6 @@
 </p>
 
 <h3 align="center">CI/CD Shared Libraries Release Management Automation</h3>
-
-<div align="center">
-
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-
 <div align="center">
 	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/git.png" alt="Git" title="Git"/></code>
 	<code><img width="50" src="https://raw.githubusercontent.com/marwin1991/profile-technology-icons/refs/heads/main/icons/github.png" alt="GitHub" title="GitHub"/></code>
@@ -39,9 +33,11 @@
             - [DORA Devops KPI](#dora-devops-kpi)
             - [Objectives](#objectives)
             - [Solution Strategy](#solution-strategy)
-- [Solution Contents](#solution-contents)
+- [Solution Content](#solution-content)
 
 <!-- /TOC -->
+
+
 
 # Executive Summary
 
@@ -77,7 +73,7 @@ To address these challenges, I designed and implemented **a multi-layered optimi
     - Increase **Unit Test Coverage to 80%** and **Functional Testing to 30%**.
 
 
-## :dart: Strategic Impact
+##  1. <a name='dart:StrategicImpact'></a>:dart: Strategic Impact
 
 <img align="right" width="300" height="300" src="./assets/happy.gif">
 
@@ -96,7 +92,8 @@ The project provided significant improvements in key metrics:
 
 For more detailed insights, refer to the [Results](./08-Results.md) section.
 
-## Project Context and Challenges
+##  2. <a name='ProjectContextandChallenges'></a>Project Context and Challenges
+
 ![Context](assets/context.png)
 
 This document aim to describe a project that caused high impact over my career on one or more of the following areas:
@@ -111,7 +108,7 @@ This document aim to describe a project that caused high impact over my career o
 - Cloud cost optimizations
 - Security
 
-### Project Overview
+###  2.1. <a name='ProjectOverview'></a>Project Overview
 
 
 This initiative was designed to **enhance trust, reliability, and adoption** of the shared libraries that serve as the **core foundation of the enterprise CI/CD system**. This project played a **crucial role in accelerating DevSecOps adoption** by ensuring development teams had **a stable and reliable** set of shared libraries, ultimately **reducing deployment risks and increasing time-to-market efficiency** for mature applications.  
@@ -123,14 +120,14 @@ The initiative was originated from an effort to automate the change management p
 
 Although the ultimate objective was to seamlessly integrate CICD with the Automated Change Management process, this document primarily focuses on thefirst initiative 
 
->> [!WARNING] 
+> [!WARNING] 
 > **Code Disclaimer** :The code presented in this project is a **simplified version** of the original implementation and is **not intended for production use**. Additionally, **all proprietary and confidential information has been removed** to comply with security and data protection policies.  
 
 
->> [!WARNING] 
+> [!WARNING] 
 > **AI Ussage** : Some of the content of this documentation has been redacted or reviewed by AI to ensure that no sensitive information is shared or to simplify the content as well as summarixing pseudocode that might be copnfusing after the sensitive code removal. Tools used included OpenAI and GH Copitlot.
 
-#### Background
+####  2.1.1. <a name='Background'></a>Background
 
 In **2022**, a leading telecommunications company embarked on a massive DevSecOps transformation project, aiming to onboard **over 3,000 repositories across 1,000 applications** to adopt **DevSecOps standards**. The **Jenkins Shared Libraries team**, a group of just **five engineers**, was responsible for maintaining the **core CI/CD automation layer**.  
 
@@ -173,7 +170,7 @@ At the time, Jenkins Shared Libraries **lacked the stability required to support
 
 By addressing these challenges, this project played a key role in accelerating DevSecOps adoption, improving CI/CD reliability, and enabling faster, more secure software delivery.  
 
-#### DORA Devops KPI
+####  2.1.2. <a name='DORADevopsKPI'></a>DORA Devops KPI
 
 ![DORA](https://dora.dev/guides/dora-metrics-four-keys/dora-metrics-four-keys.png)
 
@@ -181,43 +178,32 @@ The [DORA](https://dora.dev/guides/dora-metrics-four-keys/) metrics are a set of
 
 | KPI | Low | Medium | High | Elite |
 |-----|-----|--------|------|-------|
-| Deployment Frequency | Less than a month | 1/month - 1/week | 1/week - 1/day | On demand |
-| Avg deployment speed | 2h | 30-120 minutes | 15-30 minutes | < 15 minutes |
-| Average time for changes | more than a month | 1 week - 1 month | 1 day - 1 week | < 1 day |
-| MTTR (Mean Time to Restore) | more than a week | 1 day - 1 week | 1 day - 1 hour | < 1 hour |
-Change Failure Rate | > 45%| 31-45% | 16-30% | 0-15% |
-| Code Quality Bug Score | At last 1 blocker or critical Bug (E & D Score) | At least 1 major Bug (C Score) | At least 1 minor Bug (B Score) | No Bugs (A Score) |
-| Static Application Security Testing (SAST) | At last 1 blocker or critical Vulnerability (E & D Score) | At least 1 major Vulnerability (C Score) | At least 1 minor Vulnerability (B Score) | Info Only (A Score) |
-Dependency Vulnerabilities | At last 1 Critical or HighSeverity Level |  At least 1 Medium Severity Level | At least 1 Low Severity Level | No Vulnerabilities |
-| Test Automation | Less than 20% |20-80% | >80% | >80% |
-| Functional Testing | No | All Test Run | All Test Pass | All tests Pass |
+| **Deployment Frequency** | Less than a month | 1/month - 1/week | 1/week - 1/day | On demand |
+| **Avg deployment speed** | 2h | 30-120 minutes | 15-30 minutes | < 15 minutes |
+| **Average time for changes** | more than a month | 1 week - 1 month | 1 day - 1 week | < 1 day |
+| **MTTR (Mean Time to Restore)** | more than a week | 1 day - 1 week | 1 day - 1 hour | < 1 hour |
+| **Change Failure Rate** | > 45%| 31-45% | 16-30% | 0-15% |
+| **Code Quality Bug Score** | At last 1 blocker or critical Bug (E & D Score) | At least 1 major Bug (C Score) | At least 1 minor Bug (B Score) | No Bugs (A Score) |
+| **Static Application Security Testing (SAST)** | At last 1 blocker or critical Vulnerability (E & D Score) | At least 1 major Vulnerability (C Score) | At least 1 minor Vulnerability (B Score) | Info Only (A Score) |
+| **Dependency Vulnerabilities** | At last 1 Critical or HighSeverity Level |  At least 1 Medium Severity Level | At least 1 Low Severity Level | No Vulnerabilities |
+| **Test Automation** | Less than 20% |20-80% | >80% | >80% |
+| **Functional Testing** | No | All Test Run | All Test Pass | All tests Pass |
 
 This in important to understand what is a mature application and what was the objective of the JSL improvements.
 
 
-#### Objectives
+####  2.1.3. <a name='Objectives'></a>Objectives
 
 The main objectives of this project were:
 
-| Objective ID | Objective | Details |
+| **Objective ID** | Objective | Details |
 |--------------|-----------|---------|
-| OBJ-001 | Increase Maturity (**[DORA](#dora-devops-kpi) HIGH** ) of the Jenkins Shared Libraries and related core components | - Increase Unit Test Coverage to 80%<br>- Implement Functional Testing with at least 30% of coverage<br>- Implement Regression Testing for Unit and Functional Testing<br>- Fix SonarQube Issues or justify the existence of them |
-| OBJ-002 | Create a way to automatically generate Release Notes and Change Logs | - Releases should be automatically updated each 15 days to ensure features are under testing on latest code and be incorporated to Stable when ready for production<br>- Hot Fixes should be automatically included on stable release if possible<br>- Fixes should be included on current release if possible |
-| OBJ-003 | Create a way to automatically update the applications that are using the Jenkins Shared Libraries and related core components | |
+| **OBJ-001** | Increase Maturity (**[DORA](#dora-devops-kpi) HIGH** ) of the Jenkins Shared Libraries and related core components | - Increase Unit Test Coverage to 80%<br>- Implement Functional Testing with at least 30% of coverage<br>- Implement Regression Testing for Unit and Functional Testing<br>- Fix SonarQube Issues or justify the existence of them |
+| **OBJ-002** | Create a way to automatically generate Release Notes and Change Logs | - Releases should be automatically updated each 15 days to ensure features are under testing on latest code and be incorporated to Stable when ready for production<br>- Hot Fixes should be automatically included on stable release if possible<br>- Fixes should be included on current release if possible |
+| **OBJ-003** | Create a way to automatically update the applications that are using the Jenkins Shared Libraries and related core components | |
 
 
-In parallel we should be able to create a DevSecOps GCR that will be able to be executed automatically for the mature applications based on automatic analysis criteria.
-
-| Objective ID | Objective | Details |
-|--------------|-----------|---------|
-| OBJ-004 | Automate system communication with ServiceNow for deployment approval | - Pipeline communicates with ServiceNow to get approval for deploying code to production |
-| OBJ-005 | Automate pre-production evidence gathering | - Automatically gather change log, peer review, SonarQube report |
-| OBJ-006 | Validate code variables | - Validate production branch, tag names, payload, implementers, testers |
-| OBJ-007 | Automate code validation, promotion, and deployment | - Automatically validate, promote, and deploy code to production |
-| OBJ-008 | Automate status updates | - Automatically update status with deployment result, smoke test, alternate stats, quality gates by the pipeline |
-
-
-#### Solution Strategy
+####  2.1.4. <a name='SolutionStrategy'></a>Solution Strategy
 
 
 ![AllInOne](assets/allinone.gif)  
@@ -255,13 +241,15 @@ Since Jenkins lacks **efficient functional testing frameworks**, we developed a 
 - :six: Automated Release Notes
     - **GitHub Release Notes System** is used to document changes. based on **[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)** which are enforced to **auto-classify changes (fix, feat, chore, etc.)**.  
 
-# Solution Contents
+<!-- CONTENTTABLE:START -->
+# Solution Content
 
-- [1 Introduction and Goals](./01-introduction-and-goals.md)
-- [2 Technological Constraints](./02-technical-constraints.md)
-- [3 System Context and Scope](./03-system-context-and-scope.md)
-- [4 Building Block](./04-building-block-view.md)
-- [5 System Design](./05-system-design.md)
-- [6 Design Dessions](./06-desing-decisions.md)
-- [7 Technical risks](./07-technical-risks-.md)
-- [8 Results](./08-Results.md)
+1. [Introduction and Goals](01-introduction-and-goals.md)
+2. [Technical Constraints](02-technical-constraints.md)
+3. [System Context and Scope](03-system-context-and-scope.md)
+4. [Building Block View](04-building-block-view.md)
+5. [Runtime Overview](05-RuntimeOverview.md)
+6. [Design Decisions](06-design-decisions.md)
+7. [Technical Risks](07-technical-risks.md)
+8. [Results](08-Results.md)
+<!-- CONTENTTABLE:END -->

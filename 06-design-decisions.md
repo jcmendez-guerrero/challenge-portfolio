@@ -6,6 +6,7 @@
     - [Use of branch rather than tag](#use-of-branch-rather-than-tag)
     - [Conventional Commits](#conventional-commits)
     - [Reverts](#reverts)
+- [CONTENT](#content)
 
 <!-- /TOC -->
 
@@ -28,3 +29,17 @@ This Section aim to document all the architectural decisions taken
 | Problem | Constraints | Alternatives | Decision |
 | --- | --- | --- | --- |
 | When a revert is required by any reason, the system may identify issues at sonar level due the not tested coverage or similar issues, this might go againts the controls of the standard pipeline if those are forced skipped. | :children_crossing: Sonar consider a revert as a new code <br> :children_crossing: Revert is done automatically from GitHub | :twisted_rightwards_arrows: Manual issues resolution <br> :twisted_rightwards_arrows: Skip controls for reverts | Reverts automatically created from Github can skip the controls due that if they are required is due an issue detected that is impacting the end users. The code is considered to be already in the code in the past and therefore was already tested. |
+
+
+<!-- CONTENTTABLE:START -->
+# Solution Content
+
+1. [Introduction and Goals](01-introduction-and-goals.md)
+2. [Technical Constraints](02-technical-constraints.md)
+3. [System Context and Scope](03-system-context-and-scope.md)
+4. [Building Block View](04-building-block-view.md)
+5. [Runtime Overview](05-RuntimeOverview.md)
+6. [Design Decisions](06-design-decisions.md)
+7. [Technical Risks](07-technical-risks.md)
+8. [Results](08-Results.md)
+<!-- CONTENTTABLE:END -->

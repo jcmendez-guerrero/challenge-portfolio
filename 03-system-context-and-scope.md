@@ -2,8 +2,9 @@
 
 <!-- TOC -->
 
-- [3 System Context and Scope](#3-system-context-and-scope)
-    - [3.1 System Context Diagram](#31-system-context-diagram)
+- [System Context and Scope](#system-context-and-scope)
+    - [System Context Diagram](#system-context-diagram)
+- [Solution Content](#solution-content)
 
 <!-- /TOC -->
 
@@ -25,3 +26,17 @@ This section contain all the delimits of the systems and communications
 | MS Teams | Main Communication tool where the notifications about the status of the pipelines, releases generation and publish release notes |
 | Jenkins | Build system which will execute the different componentes and pipelines |
 | Apigee | API Gateway used to communicate Internet Apps to Jenkins |
+
+
+<!-- CONTENTTABLE:START -->
+# Solution Content
+
+1. [Introduction and Goals](01-introduction-and-goals.md)
+2. [Technical Constraints](02-technical-constraints.md)
+3. [System Context and Scope](03-system-context-and-scope.md)
+4. [Building Block View](04-building-block-view.md)
+5. [Runtime Overview](05-RuntimeOverview.md)
+6. [Design Decisions](06-design-decisions.md)
+7. [Technical Risks](07-technical-risks.md)
+8. [Results](08-Results.md)
+<!-- CONTENTTABLE:END -->
